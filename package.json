@@ -1,5 +1,5 @@
 {
-  "name": "draw",
+  "name": "pixeldraw",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
