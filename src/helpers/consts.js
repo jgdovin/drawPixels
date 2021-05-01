@@ -1,4 +1,4 @@
-const PIXEL_SIZE = 25;
+const PIXEL_SIZE = 15;
 const VIEWPORT_WIDTH = window.innerWidth;
 const VIEWPORT_HEIGHT = window.innerHeight;
 const DRAWING_COLUMNS = 32;
@@ -7,6 +7,7 @@ const DRAWING_WIDTH = PIXEL_SIZE * DRAWING_COLUMNS;
 const DRAWING_HEIGHT = PIXEL_SIZE * DRAWING_ROWS;
 module.exports = {
     PIXEL_SIZE,
+    SECONDARY_COLOR: '#414141',
     DRAWING_COLUMNS,
     DRAWING_ROWS,
     DRAWING_WIDTH,
