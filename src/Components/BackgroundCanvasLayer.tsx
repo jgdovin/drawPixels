@@ -4,7 +4,8 @@ import {
     DRAWING_WIDTH,
     DRAWING_HEIGHT,
     DRAWING_OFFSET_LEFT,
-    DRAWING_OFFSET_TOP
+    DRAWING_OFFSET_TOP,
+    PIXEL_SIZE
 } from '../helpers/consts';
 
 const BackgroundCanvas = () => {
@@ -13,8 +14,22 @@ const BackgroundCanvas = () => {
     useEffect(() => {
             const backgroundCtx = backgroundCanvasRef.current.getContext('2d');
             fixDpi(backgroundCanvasRef.current);
-            backgroundCtx!.fillStyle = '#ffffff';
-            backgroundCtx!.fillRect(0, 0, DRAWING_WIDTH, DRAWING_HEIGHT);
+            const backgroundSize = 16 * PIXEL_SIZE;
+            console.log(Math.ceil(DRAWING_WIDTH / backgroundSize));
+            for (let i = 0; i < Math.ceil(DRAWING_WIDTH / backgroundSize); i++) {
+                for (let j = 0; j < Math.ceil(DRAWING_HEIGHT / backgroundSize); j++) {
+                    console.log(i, j);
+                    if ((i%2 === 0 && j%2 === 0) || (i%2 !== 0 && j%2 !== 0)) {
+                        backgroundCtx!.fillStyle = '#494949';
+                    } else {
+                        backgroundCtx!.fillStyle = '#cacaca';
+                    }
+                    backgroundCtx!.fillRect(i * backgroundSize, j * backgroundSize, backgroundSize, backgroundSize);
+
+                }
+            }
+            // backgroundCtx!.fillStyle = '#ffffff';
+            // backgroundCtx!.fillRect(0, 0, DRAWING_WIDTH, DRAWING_HEIGHT);
         }, []);
 
     return (
