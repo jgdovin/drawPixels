@@ -1,0 +1,8 @@
+.active {
+    background-color: #ff0000;
+}
+
+.toolButton {
+    width: 100px;
+    height: 100px;
+}

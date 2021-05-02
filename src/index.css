@@ -15,4 +15,9 @@ code {
 #root {
   height: '1000px';
   width: 100%;
+  background-color: #414141;
+}
+
+body {
+  background-color: #414141;
 }

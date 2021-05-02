@@ -4,34 +4,28 @@ import {
     PIXEL_SIZE,
     DRAWING_WIDTH,
     DRAWING_HEIGHT,
-    VIEWPORT_WIDTH,
-    VIEWPORT_HEIGHT,
     DRAWING_OFFSET_LEFT,
-    DRAWING_OFFSET_TOP,
-    SECONDARY_COLOR
+    DRAWING_OFFSET_TOP
 } from '../helpers/consts';
 
-const DrawingCanvas = (props: { setActiveCell: Function; }) => {
-    const { setActiveCell } = props;
-    const backgroundCanvasRef = useRef<HTMLCanvasElement>(document.createElement('canvas'));
+const DrawingCanvas = (props: { activeTool: string; setActiveCell: Function; }) => {
+    const { activeTool, setActiveCell } = props;
     const drawingCanvasRef = useRef<HTMLCanvasElement>(document.createElement('canvas'));
     
     const [isDragging, setIsDragging] = useState(false);
     const latestDragState = useRef(isDragging);
-
+    const activeToolRef = useRef(activeTool);
     useEffect(() => {
         latestDragState.current = isDragging;
     }, [isDragging])
 
     useEffect(() => {
-        const backgroundCtx = backgroundCanvasRef.current.getContext('2d');
-        fixDpi(backgroundCanvasRef.current);
+        activeToolRef.current = activeTool;
+    }, [activeTool])
+
+    useEffect(() => {
         const drawCtx = drawingCanvasRef.current.getContext('2d');
         fixDpi(drawingCanvasRef.current);
-        backgroundCtx!.fillStyle = SECONDARY_COLOR;
-        backgroundCtx!.fillRect(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        drawCtx!.fillStyle = '#ffffff';
-        drawCtx!.fillRect(0, 0, DRAWING_WIDTH, DRAWING_HEIGHT);
 
         const handleMouseDown = {
             handleEvent(e: any) {
@@ -49,13 +43,21 @@ const DrawingCanvas = (props: { setActiveCell: Function; }) => {
                 const y = Math.floor((e.pageY - DRAWING_OFFSET_TOP) / PIXEL_SIZE);
                 setActiveCell(`${x},${y}`);
                 if (!latestDragState.current && e.type !== 'click') { return; }
-                drawCtx!.fillStyle = '#000000';
-                drawCtx!.fillRect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+                const currentTool = activeToolRef.current;
+                if (currentTool === 'PENCIL') {
+                    drawCtx!.fillStyle = '#000000';
+                    drawCtx!.fillRect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+                }
+                if (currentTool === 'ERASER') {
+                    drawCtx!.clearRect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+                }
+                
             }
         }
         const handleMouseLeave = {
             handleEvent(e: any) {
                 setActiveCell('');
+                setIsDragging(false);
             }
         }
 
@@ -67,7 +69,9 @@ const DrawingCanvas = (props: { setActiveCell: Function; }) => {
     }, [setActiveCell]);
 
     return (
-        <canvas ref={drawingCanvasRef} className="draw" style={{cursor: 'none', position: 'absolute', left: DRAWING_OFFSET_LEFT, top: DRAWING_OFFSET_TOP, width: DRAWING_WIDTH, height: DRAWING_HEIGHT}} />
+        <div>
+            <canvas ref={drawingCanvasRef} className="draw" style={{cursor: 'none', position: 'absolute', left: DRAWING_OFFSET_LEFT, top: DRAWING_OFFSET_TOP, width: DRAWING_WIDTH, height: DRAWING_HEIGHT}} />
+        </div>
     );
 };
 
