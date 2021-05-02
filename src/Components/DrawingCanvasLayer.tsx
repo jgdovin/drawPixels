@@ -70,7 +70,7 @@ const DrawingCanvas = (props: { activeTool: string; setActiveCell: Function; }) 
 
     return (
         <div>
-            <canvas ref={drawingCanvasRef} className="draw" style={{cursor: 'none', position: 'absolute', left: DRAWING_OFFSET_LEFT, top: DRAWING_OFFSET_TOP, width: DRAWING_WIDTH, height: DRAWING_HEIGHT}} />
+            <canvas ref={drawingCanvasRef} className="draw" style={{cursor: 'crosshair', position: 'absolute', left: DRAWING_OFFSET_LEFT, top: DRAWING_OFFSET_TOP, width: DRAWING_WIDTH, height: DRAWING_HEIGHT}} />
         </div>
     );
 };
