@@ -1,4 +1,4 @@
-const PIXEL_SIZE = 15;
+const PIXEL_SIZE = 1;
 const VIEWPORT_WIDTH = window.innerWidth;
 const VIEWPORT_HEIGHT = window.innerHeight;
 const DRAWING_COLUMNS = 32;
@@ -18,6 +18,7 @@ module.exports = {
     DRAWING_HEIGHT,
     VIEWPORT_WIDTH,
     VIEWPORT_HEIGHT,
-    DRAWING_OFFSET_LEFT: Math.round(VIEWPORT_WIDTH / 2),
+    DRAWING_OFFSET_LEFT: Math.round(VIEWPORT_WIDTH / 2 - ((DRAWING_COLUMNS * PIXEL_SIZE) / 2)),
     DRAWING_OFFSET_TOP: Math.round(VIEWPORT_HEIGHT / 2 - ((DRAWING_ROWS * PIXEL_SIZE) / 2)),
+    ZOOM_LEVEL: '400%'
 };

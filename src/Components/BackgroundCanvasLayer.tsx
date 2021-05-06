@@ -8,6 +8,8 @@ import {
     PIXEL_SIZE
 } from '../helpers/consts';
 
+import './Canvas.css';
+
 const BackgroundCanvas = () => {
     const backgroundCanvasRef = useRef<HTMLCanvasElement>(document.createElement('canvas'));
 
@@ -15,10 +17,9 @@ const BackgroundCanvas = () => {
             const backgroundCtx = backgroundCanvasRef.current.getContext('2d');
             fixDpi(backgroundCanvasRef.current);
             const backgroundSize = 16 * PIXEL_SIZE;
-            console.log(Math.ceil(DRAWING_WIDTH / backgroundSize));
+            
             for (let i = 0; i < Math.ceil(DRAWING_WIDTH / backgroundSize); i++) {
                 for (let j = 0; j < Math.ceil(DRAWING_HEIGHT / backgroundSize); j++) {
-                    console.log(i, j);
                     if ((i%2 === 0 && j%2 === 0) || (i%2 !== 0 && j%2 !== 0)) {
                         backgroundCtx!.fillStyle = '#494949';
                     } else {
@@ -34,7 +35,7 @@ const BackgroundCanvas = () => {
 
     return (
         <div>
-            <canvas ref={backgroundCanvasRef} className="background" style={{ position: 'absolute', left: DRAWING_OFFSET_LEFT, top: DRAWING_OFFSET_TOP, width: DRAWING_WIDTH, height: DRAWING_HEIGHT}} />
+            <canvas ref={backgroundCanvasRef} className="canvas background" style={{ position: 'absolute', left: DRAWING_OFFSET_LEFT, top: DRAWING_OFFSET_TOP, width: DRAWING_WIDTH, height: DRAWING_HEIGHT}} />
         </div>
     );
 };
